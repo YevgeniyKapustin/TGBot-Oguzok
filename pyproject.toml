@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tgbot-oguzok"
+version = "0.1.0"
+description = ""
+authors = ["Yevgeniy Kap <kapustaevg@gmail.com>"]
+readme = "README.md"
+packages = [{include = "tgbot_oguzok"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.2.0"
+pydantic-settings = "^2.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
