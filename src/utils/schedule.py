@@ -1,6 +1,6 @@
 from asyncio import sleep
 
 
-async def send_delayed_message(message, delay, text):
+async def send_delayed_message(message, delay):
     await sleep(int(delay))
-    await message.answer(text=text)
+    await message.reply(text='🔔')

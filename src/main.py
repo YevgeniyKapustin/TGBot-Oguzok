@@ -3,7 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher
 
 from src import config
-from src.handlers import start, reminder, delayed_message
+from src.handlers import start, reminder
 
 
 async def main():
@@ -13,7 +13,6 @@ async def main():
     dp.include_routers(
         start.router,
         reminder.router,
-        delayed_message.router
     )
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

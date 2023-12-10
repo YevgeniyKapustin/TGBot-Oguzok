@@ -9,8 +9,7 @@ router = Router()
 async def start(message: Message):
     kb = [
         [
-            KeyboardButton(text="Напоминание"),
-            KeyboardButton(text="Отложенное сообщение")
+            KeyboardButton(text="Напоминание")
         ],
     ]
     keyboard = ReplyKeyboardMarkup(
@@ -18,4 +17,4 @@ async def start(message: Message):
         resize_keyboard=True,
         input_field_placeholder="Выберите команду"
     )
-    await message.answer("Опять работа?", reply_markup=keyboard)
+    await message.answer("Бананы?", reply_markup=keyboard)

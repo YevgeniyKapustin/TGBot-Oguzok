@@ -5,24 +5,27 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
-from src.services.messages import reminder_step1, reminder_step2
 from src.services.reminder import Reminder
+from src.utils.filtres import ReminderTimeFilter
 from src.utils.schedule import send_delayed_message
-from src.utils.time import Time
+from src.services.time import Time
 
 router = Router()
 
 
 @router.message(StateFilter(None), F.text.lower() == "напоминание")
 async def reminder(message: Message, state: FSMContext):
-    await message.reply(reminder_step1)
+    await message.reply(
+        'Напиши время, в которое необходимо напомнить о заметке. '
+        'Например: "27 16:40" (день час:минуты)'
+    )
     await state.set_state(Reminder.choosing_time)
 
 
-@router.message(Reminder.choosing_time)
+@router.message(Reminder.choosing_time, ReminderTimeFilter())
 async def time_chosen(message: Message, state: FSMContext):
     await state.update_data(choosing_time=message.text.lower())
-    await message.answer(reminder_step2)
+    await message.answer('ТЕПЕПЬ НАПИШИ САМО НАПОМИНАНИЕ СУКА.')
     await state.set_state(Reminder.choosing_message)
 
 
@@ -33,11 +36,8 @@ async def time_chosen_incorrectly(message: Message):
 
 @router.message(Reminder.choosing_message)
 async def message_chosen(message: Message, state: FSMContext):
-    await state.update_data(choosing_message=message.text)
     user_data = await state.get_data()
     time = Time(user_data['choosing_time'])
-    text = user_data['choosing_message']
-
     await message.answer(
         text=f'Напоминание на {time.get_text_time()} установлено.'
     )
@@ -45,5 +45,4 @@ async def message_chosen(message: Message, state: FSMContext):
     await send_delayed_message(
         message,
         time.get_unix_time() - int(datetime.now().timestamp()),
-        text
     )
