@@ -6,7 +6,7 @@ authors = ["Yevgeniy Kap <kapustaevg@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 aiogram = "^3.2.0"
 pydantic-settings = "^2.1.0"
 loguru = "^0.7.2"
