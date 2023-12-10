@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from pytz import timezone
+
 
 class Time(object):
     __slots__ = ('__user_time_input', '__date', '__unix_date')
@@ -15,7 +17,7 @@ class Time(object):
         return self.__date
 
     def __convert_str_time_to_int(self) -> int:
-        now: datetime = datetime.now()
+        now: datetime = datetime.now(timezone('Europe/Moscow'))
         date: datetime = (
             datetime.strptime(self.__user_time_input, "%d %H:%M").
             replace(year=now.year).
