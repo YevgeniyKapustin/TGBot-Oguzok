@@ -7,13 +7,8 @@ router = Router()
 
 @router.message(Command("start"))
 async def start(message: Message):
-    kb = [
-        [
-            KeyboardButton(text="Напоминание")
-        ],
-    ]
-    keyboard = ReplyKeyboardMarkup(
-        keyboard=kb,
+    keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
+        keyboard=[[KeyboardButton(text="Напоминание")]],
         resize_keyboard=True,
         input_field_placeholder="Выберите команду"
     )

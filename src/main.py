@@ -6,10 +6,10 @@ from src import config
 from src.handlers import start, reminder
 
 
-async def main():
+async def main() -> None:
     logging.basicConfig(level=logging.INFO)
-    bot = Bot(config.TOKEN)
-    dp = Dispatcher()
+    bot: Bot = Bot(config.TOKEN)
+    dp: Dispatcher = Dispatcher()
     dp.include_routers(
         start.router,
         reminder.router,

@@ -36,8 +36,8 @@ async def time_chosen_incorrectly(message: Message):
 
 @router.message(Reminder.choosing_message)
 async def message_chosen(message: Message, state: FSMContext):
-    user_data = await state.get_data()
-    time = Time(user_data['choosing_time'])
+    user_data: dict = await state.get_data()
+    time: Time = Time(user_data['choosing_time'])
     await message.answer(
         text=f'Напоминание на {time.get_text_time()} установлено.'
     )

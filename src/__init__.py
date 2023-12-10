@@ -6,5 +6,5 @@ from dotenv import load_dotenv
 from src.utils.config import Settings
 
 load_dotenv()
-config = Settings()
+config: Settings = Settings()
 sys.path.append(str(Path(sys.path[0]).joinpath('..')))
