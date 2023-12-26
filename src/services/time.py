@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, time
 
 from pytz import timezone
 
@@ -18,11 +18,23 @@ class Time(object):
 
     def __convert_str_time_to_int(self) -> int:
         now: datetime = datetime.now(timezone('Europe/Moscow'))
-        date: datetime = timezone('Europe/Moscow').localize(
-            datetime.strptime(self.__user_time_input, "%d %H:%M").
-            replace(year=now.year).
-            replace(month=now.month)
-        )
+        if ' ' in self.__user_time_input:
+            date: datetime = timezone('Europe/Moscow').localize(
+                datetime.strptime(self.__user_time_input, '%d %H:%M').
+                replace(year=now.year).
+                replace(month=now.month)
+            )
+        else:
+            date: datetime = timezone('Europe/Moscow').localize(
+                datetime.strptime(self.__user_time_input, '%H:%M').
+                replace(year=now.year).
+                replace(month=now.month).
+                replace(day=int(get_it_next_day(
+                    hour=self.__user_time_input.split(':')[0],
+                    minutes=self.__user_time_input.split(':')[1]
+                )))
+            )
+
         if date < now:
             if date.month < 12:
                 date: datetime = date.replace(month=date.month + 1)
@@ -31,3 +43,9 @@ class Time(object):
                 date: datetime = date.replace(month=date.month - 11)
         self.__date: str = date.strftime("%m.%d %H:%M")
         return int(date.timestamp())
+
+
+def get_it_next_day(hour: str | int, minutes: str | int) -> str:
+    now: datetime = datetime.now()
+    desired_time: time = time(int(hour), int(minutes))
+    return str(now.day + 1 if now.time() > desired_time else now.day)

@@ -17,7 +17,8 @@ router = Router()
 async def reminder(message: Message, state: FSMContext):
     await message.reply(
         'Напиши время, в которое необходимо напомнить о заметке. '
-        'Например: "27 16:40" (день час:минуты)'
+        'Например: "27 16:40" (день час:минуты), можно не писать день, тогда '
+        'будет ближайшее доступное время'
     )
     await state.set_state(Reminder.choosing_time)
 
